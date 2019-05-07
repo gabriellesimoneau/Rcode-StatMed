@@ -14,18 +14,21 @@
 ## Input                                                    ##    
 ##   - inpath: path of the simulated datasets               ##
 ##   - outpath: destination path for results .txt files     ##
+##   - dtrpath: path with DTRreg_v1.4.R                     ##
 ##                                                          ##
 ## Output                                                   ##        
 ##   - three txt files per simulation setting               ##
 ##                                                          ##
-## Date: February 12, 2019                                  ##
+## Date: May 07, 2019                                       ##
 ##############################################################
 
 rm(list = ls())
 expit <- function(x) exp(x) / (1 + exp(x))
-library(DTRreg)
+# dtrpath <- 
 # inpath <- 
 # outpath <- 
+source(paste(dtrpath, "/DTRreg_v1.4.R"))
+
 
 #### ---- Log-normal survival times, linear treatment-free ---- ####
 theta1 <- c(4.7, 1.5, -0.8, 0.1, 0.1)

@@ -11,18 +11,20 @@
 ##   - inpath: path containing the simulated datasets       ##
 ##   - outpath: destination path for figures                ##
 ##   - respath: path containing the results .txt files      ##
+##   - dtrpath: path with DTRreg_v1.4.R                     ##
 ##                                                          ##
 ## Output                                                   ##
 ##   - PNG figures                                          ##
 ##                                                          ## 
-## Date: March 5, 2019                                      ##
+## Date: May 07, 2019                                       ##
 ##############################################################
 rm(list = ls())
 expit <- function(x) exp(x) / (1 + exp(x))
-library(DTRreg)
+# dtrpath <- 
 # inpath <- 
 # outpath <- 
 # respath <- 
+source(paste(dtrpath, "/DTRreg_v1.4.R"))
 
 #### ---- Run the simulations with n=1000, and extract estimated psi11 and standard errors ---- ####
 n <- 1000
