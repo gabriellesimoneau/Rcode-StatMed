@@ -1,5 +1,5 @@
 # Rcode-StatisticsComputing
-Support R code for article in Statistics and Computing
+Support R code for article in Statistics in Medicine
 
 ## Description of Files
 
