@@ -10,7 +10,8 @@ Support R code for article in Statistics in Medicine
 * Unknown_error_distribution.R: produce .txt files with results to reproduce the content in Section 4.2 of the paper and some sections of the Supplementary Material.
 * Figures_mainpaper.R: reproduce the figures in the paper.
 * Figures_suppmaterial.R: reproduce all figures in the Supplementary Material.
-* Asymptotic_variance_details.R: reproduce the results and figures in the last section of the Supplementary Material.
+* Twostage_events_nonregularity.R: reproduce additional simulations in Section 4 of the Supplementary Material.
+* Asymptotic_variance_details.R: reproduce the results and figures in Section 5 of the Supplementary Material.
 
 ### Folder 'Figures'
 It contains Figures 1-3 in the main paper.
