@@ -19,6 +19,8 @@
 ##############################################################
 
 rm(list = ls())
+inpath <- "C:/Users/Gabrielle/Google Drive/Ongoing papers/Paper 3 Stat Med/Supplementary Material/R code/R files/Datasets"
+outpath <- "C:/Users/Gabrielle/Google Drive/Ongoing papers/Paper 3 Stat Med/Supplementary Material/R code/Rnw files/Figures"
 # inpath <- 
 # outpath <- 
 
@@ -503,7 +505,118 @@ points(x = data$n.coord[which(data$method == "Parametric bootstrap 2")], y = dat
 dev.off()
 
 
-#### --------- Figure 5: coverage for psi10, all 8 nonregular scenarios  ---------####
+#### --------- Figure 5: coverage for psi11, scenarios 1,2,7  ---------####
+g <- 0.15
+keep <- seq(2,10,by=2)
+n <- 1000
+sc1 <- read.table(paste(inpath,"/nonreg_twoev_sc1_", n,"_cov.txt", sep = ""))
+sc2 <- read.table(paste(inpath,"/nonreg_twoev_sc2_", n,"_cov.txt", sep = ""))
+sc7 <- read.table(paste(inpath,"/nonreg_twoev_sc7_", n,"_cov.txt", sep = ""))
+cov1 <- apply(sc1, 2, sum)[keep]
+cov2 <- apply(sc2, 2, sum)[keep]
+cov7 <- apply(sc7, 2, sum)[keep]
+coverage <- c(cov1, cov2, cov7)/1000
+method <- factor(rep(c("Asymptotic (adjusted)", "Asymptotic (naive)", "Standard bootstrap", "Parametric bootstrap 1", "Parametric bootstrap 2"), 3), levels = c("Asymptotic", "Asymptotic (naive)", "Standard bootstrap", "Parametric bootstrap 1", "Parametric bootstrap 2"))
+scenario <- factor(rep(c("Scenario 1 (Nonregular)", "Scenario 2 (Near-nonregular)", "Scenario 7 (Regular)"), each = 5), levels = c("Scenario 1 (Nonregular)", "Scenario 2 (Near-nonregular)","Scenario 7 (Regular)"))
+data1000 <- data.frame(coverage, method, scenario)
+data1000$n <- rep(1000, nrow(data1000))
+data1000$y.coord <- rep(c(5+g,4+g,3+g,2+g,1+g), 3) 
+n <- 300
+sc1 <- read.table(paste(inpath,"/nonreg_twoev_sc1_", n,"_cov.txt", sep = ""))
+sc2 <- read.table(paste(inpath,"/nonreg_twoev_sc2_", n,"_cov.txt", sep = ""))
+sc7 <- read.table(paste(inpath,"/nonreg_twoev_sc7_", n,"_cov.txt", sep = ""))
+cov1 <- apply(sc1, 2, sum)[keep]
+cov2 <- apply(sc2, 2, sum)[keep]
+cov7 <- apply(sc7, 2, sum)[keep]
+coverage <- c(cov1, cov2, cov7)/1000
+method <- factor(rep(c("Asymptotic (adjusted)", "Asymptotic (naive)", "Standard bootstrap", "Parametric bootstrap 1", "Parametric bootstrap 2"), 3), levels = c("Asymptotic", "Asymptotic (naive)", "Standard bootstrap", "Parametric bootstrap 1", "Parametric bootstrap 2"))
+scenario <- factor(rep(c("Scenario 1 (Nonregular)", "Scenario 2 (Near-nonregular)", "Scenario 7 (Regular)"), each = 5), levels = c("Scenario 1 (Nonregular)", "Scenario 2 (Near-nonregular)","Scenario 7 (Regular)"))
+data300 <- data.frame(coverage, method, scenario)
+data300$n <- rep(300, nrow(data300))
+data300$y.coord <- rep(c(5-g,4-g,3-g,2-g,1-g), 3) 
+data <- rbind(data300, data1000)
+#prepare plot
+lb <- 0.95 - 1.96*(0.95*0.05/1000)^(1/2)
+ub <- 0.95 + 1.96*(0.95*0.05/1000)^(1/2)
+cex.points <- 3.5
+cex.lwd <- 1.9
+cex.xaxislab <- 1.7
+cex.yaxislab <- 1.8
+cex.title <- 2
+cex.axistitle <- 1.8
+f3 <- 0.5
+tiff(paste(outpath, "/Figure5_Supp.tif", sep = ""), width = 6.8, height = 3.5, units = "in", res = 800, pointsize = 5)
+mat <- matrix(seq(1,3), nrow = 1, ncol = 3)
+layout(mat, c(1.52,1,1), c(1,1))
+par(mar = c(5.1,16.1,3.1,1.1), xpd = TRUE)
+dat <- data[which(data$scenario == "Scenario 1 (Nonregular)" & data$n == 1000),]
+plot(x = dat$coverage[which(dat$method == "Asymptotic (adjusted)")], y = dat$y.coord[which(dat$method == "Asymptotic (adjusted)")], xlim = c(0.92,0.98), ylim = c(0.8,5.2), ylab = "", yaxt='n', xaxt = 'n', xlab = "Coverage", cex.lab = cex.axistitle, main = "Scenario 1 (Nonregular)", cex.main = cex.title)
+text(x = 0.918, y = c(5,4,3,2,1), pos = 2,labels = c("Asymptotic (adjusted)", "Asymptotic (naive)", "Standard bootstrap", "Parametric bootstrap 1", "Parametric bootstrap 2"), cex = cex.yaxislab)
+axis(1, at = c(0.93,0.95,0.97), cex.axis = cex.xaxislab)
+lines(x = c(0.917,0.982), y = c(5+g,5+g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(4+g,4+g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(3+g,3+g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(2+g,2+g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(1+g,1+g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(5-g,5-g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(4-g,4-g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(3-g,3-g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(2-g,2-g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(1-g,1-g), col = "azure2", lwd = 2)
+points(x = dat$coverage, y = dat$y.coord, pch = 15, cex = cex.points)
+dat <- data[which(data$scenario == "Scenario 1 (Nonregular)" & data$n == 300),]
+points(x = dat$coverage, y = dat$y.coord, pch = 10, cex = cex.points+f3)
+lines(x = rep(lb,2), y = c(0.64,5.36), lty = "dashed")
+lines(x = rep(ub,2), y = c(0.64,5.36), lty = "dashed")
+lines(x = rep(0.95,2), y = c(0.64,5.36))
+box(lwd = 2.5)
+
+par(mar = c(5.1,1.1,3.1,1.1), xpd = FALSE)
+dat <- data[which(data$scenario == "Scenario 2 (Near-nonregular)" & data$n == 1000),]
+plot(x = dat$coverage[which(dat$method == "Asymptotic (adjusted)")], y = dat$y.coord[which(dat$method == "Asymptotic (adjusted)")], xlim = c(0.92,0.98), ylim = c(0.8,5.2), ylab = "", yaxt='n', xaxt = 'n', xlab = "Coverage", cex.lab = cex.axistitle, main = "Scenario 2 (Near-nonregular)", cex.main = cex.title)
+axis(1, at = c(0.93,0.95,0.97), cex.axis = cex.xaxislab)
+lines(x = c(0.917,0.982), y = c(5+g,5+g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(4+g,4+g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(3+g,3+g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(2+g,2+g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(1+g,1+g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(5-g,5-g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(4-g,4-g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(3-g,3-g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(2-g,2-g), col = "azure2", lwd = 2)
+lines(x = c(0.917,0.982), y = c(1-g,1-g), col = "azure2", lwd = 2)
+points(x = dat$coverage, y = dat$y.coord, pch = 15, cex = cex.points)
+dat <- data[which(data$scenario == "Scenario 2 (Near-nonregular)" & data$n == 300),]
+points(x = dat$coverage, y = dat$y.coord, pch = 10, cex = cex.points+f3)
+lines(x = rep(lb,2), y = c(0.64,5.36), lty = "dashed")
+lines(x = rep(ub,2), y = c(0.64,5.36), lty = "dashed")
+lines(x = rep(0.95,2), y = c(0.64,5.36))
+box(lwd = 2.5)
+
+dat <- data[which(data$scenario == "Scenario 7 (Regular)" & data$n == 1000),]
+plot(x = dat$coverage[which(dat$method == "Asymptotic (adjusted)")], y = dat$y.coord[which(dat$method == "Asymptotic (adjusted)")], xlim = c(0.92,0.98), ylim = c(0.8,5.2), ylab = "", yaxt='n', xaxt = 'n', xlab = "Coverage", main = "Scenario 7 (Regular)", cex.main = cex.title, cex.lab = cex.axistitle)
+axis(1, at = c(0.93,0.95,0.97), cex.axis = cex.xaxislab)
+lines(x = c(0.91,0.99), y = c(5+g,5+g), col = "azure2", lwd = 2)
+lines(x = c(0.91,0.99), y = c(4+g,4+g), col = "azure2", lwd = 2)
+lines(x = c(0.91,0.99), y = c(3+g,3+g), col = "azure2", lwd = 2)
+lines(x = c(0.91,0.99), y = c(2+g,2+g), col = "azure2", lwd = 2)
+lines(x = c(0.91,0.99), y = c(1+g,1+g), col = "azure2", lwd = 2)
+lines(x = c(0.91,0.99), y = c(5-g,5-g), col = "azure2", lwd = 2)
+lines(x = c(0.91,0.99), y = c(4-g,4-g), col = "azure2", lwd = 2)
+lines(x = c(0.91,0.99), y = c(3-g,3-g), col = "azure2", lwd = 2)
+lines(x = c(0.91,0.99), y = c(2-g,2-g), col = "azure2", lwd = 2)
+lines(x = c(0.91,0.99), y = c(1-g,1-g), col = "azure2", lwd = 2)
+points(x = dat$coverage, y = dat$y.coord, pch = 15, cex = cex.points)
+dat <- data[which(data$scenario == "Scenario 7 (Regular)" & data$n == 300),]
+points(x = dat$coverage, y = dat$y.coord, pch = 10, cex = cex.points+f3)
+lines(x = rep(lb,2), y = c(0.64,5.36), lty = "dashed")
+lines(x = rep(ub,2), y = c(0.64,5.36), lty = "dashed")
+lines(x = rep(0.95,2), y = c(0.64,5.36))
+box(lwd = 2.5)
+dev.off()
+
+
+#### --------- Figure 6: coverage for psi10, all 8 nonregular scenarios  ---------####
 # import and prepare data
 g <- 0.15
 keep <- seq(1,9,by=2)
@@ -606,7 +719,7 @@ cex.lwd <- 1.9
 cex.xaxislab <- cex.yaxislab <- 1.7
 cex.title <- 2.5
 cex.axistitle <- 2
-png(paste(outpath, "/Figure5_Supp.png", sep = ""), width = 1136, height = 1200)
+png(paste(outpath, "/Figure51_Supp.png", sep = ""), width = 1136, height = 1200)
 mat <- matrix(c(2,4,6,8,1,3,5,7,9,1), nrow = 5)
 layout(mat, c(1,1,1,1,1), c(8,8,8,8,1))
 par(xpd = TRUE, mar = c(0,0,0,0))
