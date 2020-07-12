@@ -1,4 +1,4 @@
-# Rcode-StatisticsComputing
+# Rcode-StatMed
 Support R code for article in Statistics in Medicine
 
 ## Description of Files
